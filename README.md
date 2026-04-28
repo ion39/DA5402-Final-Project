@@ -89,7 +89,7 @@ docker compose up --build
 Services:
 
 - Frontend: `http://localhost:8080`
-- API: `http://localhost:8000`
+- API: `http://localhost:8002`
 - Prometheus: `http://localhost:9090`
 - Grafana: `http://localhost:3000`
 - MLflow: `http://localhost:5000`
