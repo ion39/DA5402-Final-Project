@@ -1,0 +1,42 @@
+groups:
+  - name: clv-api-alerts
+    rules:
+      - alert: ClvApiDown
+        expr: up{job="clv-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: clv-api
+        annotations:
+          summary: CLV API is down
+          description: Prometheus has not been able to scrape the CLV API for at least 1 minute.
+
+      - alert: HighPredictionErrorRate
+        expr: increase(clv_prediction_requests_total[5m]) >= 10 and (increase(clv_prediction_errors_total[5m]) / clamp_min(increase(clv_prediction_requests_total[5m]), 1)) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          service: clv-api
+        annotations:
+          summary: Prediction error rate is elevated
+          description: More than 5% of prediction requests have failed over the last 5 minutes.
+
+      - alert: HighPredictionLatencyP95
+        expr: histogram_quantile(0.95, sum by (le) (rate(clv_prediction_latency_seconds_bucket[5m]))) > 0.5
+        for: 10m
+        labels:
+          severity: warning
+          service: clv-api
+        annotations:
+          summary: Prediction latency is elevated
+          description: The p95 CLV prediction latency has stayed above 500 ms for at least 10 minutes.
+
+      - alert: HighLatestChurnRisk
+        expr: clv_latest_churn_probability > 0.8
+        for: 10m
+        labels:
+          severity: info
+          service: clv-api
+        annotations:
+          summary: Latest scored customer has high churn risk
+          description: The most recent prediction reported churn probability above 80% for at least 10 minutes.

@@ -328,6 +328,7 @@ def run_training() -> dict:
         mlflow.log_artifact(str(metrics_path))
         mlflow.log_artifact(str(baseline_path))
         mlflow.log_artifact(str(importance_path))
+        mlflow.log_artifact(str(model_path))
         try:
             mlflow.sklearn.log_model(regressor, artifact_path="regressor_model")
             mlflow.sklearn.log_model(classifier, artifact_path="classifier_model")

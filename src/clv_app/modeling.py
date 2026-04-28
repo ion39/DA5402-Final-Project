@@ -1,18 +1,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from importlib import import_module
 
 import pandas as pd
 from sklearn.compose import ColumnTransformer
-from sklearn.ensemble import (
-    ExtraTreesClassifier,
-    ExtraTreesRegressor,
-    GradientBoostingClassifier,
-    GradientBoostingRegressor,
-    RandomForestClassifier,
-    RandomForestRegressor,
-)
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
@@ -49,32 +41,11 @@ def make_preprocessor(feature_df: pd.DataFrame) -> tuple[ColumnTransformer, list
 
 CLASSIFIER_FACTORIES = {
     "random_forest": RandomForestClassifier,
-    "extra_trees": ExtraTreesClassifier,
-    "gradient_boosting": GradientBoostingClassifier,
-    "xgboost": "xgboost.XGBClassifier",
 }
 
 REGRESSOR_FACTORIES = {
     "random_forest": RandomForestRegressor,
-    "extra_trees": ExtraTreesRegressor,
-    "gradient_boosting": GradientBoostingRegressor,
-    "xgboost": "xgboost.XGBRegressor",
 }
-
-
-def _resolve_estimator_class(model_name: str, estimator_reference):
-    if not isinstance(estimator_reference, str):
-        return estimator_reference
-
-    module_name, class_name = estimator_reference.rsplit(".", 1)
-    try:
-        module = import_module(module_name)
-    except ImportError as exc:
-        raise ImportError(
-            f"Model '{model_name}' requires the optional dependency '{module_name}'. "
-            "Install project requirements before training with this candidate."
-        ) from exc
-    return getattr(module, class_name)
 
 
 def _build_estimator(model_name: str, factories: dict, params: dict, random_state: int):
@@ -82,7 +53,7 @@ def _build_estimator(model_name: str, factories: dict, params: dict, random_stat
         supported = ", ".join(sorted(factories))
         raise ValueError(f"Unsupported model '{model_name}'. Supported models: {supported}")
 
-    estimator_class = _resolve_estimator_class(model_name, factories[model_name])
+    estimator_class = factories[model_name]
     estimator_params = dict(params or {})
     if "random_state" in estimator_class().get_params():
         estimator_params.setdefault("random_state", random_state)

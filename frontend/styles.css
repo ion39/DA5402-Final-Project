@@ -5,7 +5,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f4f6fb;
+  background: #eef3fb;
   color: #172033;
 }
 
@@ -37,6 +37,14 @@ body {
   color: #5c6782;
 }
 
+.eyebrow,
+.section-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 h1,
 h2,
 h3,
@@ -46,6 +54,8 @@ p {
 
 .hero-stats,
 .stage-grid,
+.info-grid,
+.manual-grid,
 .result-panel,
 .result-empty {
   display: grid;
@@ -53,7 +63,9 @@ p {
 }
 
 .metric-card,
-.stage {
+.stage,
+.feature-card,
+.manual-card {
   border: 1px solid #dbe2f0;
   border-radius: 8px;
   padding: 14px;
@@ -91,6 +103,14 @@ p {
   gap: 20px;
 }
 
+.section-band {
+  position: relative;
+}
+
+.section-head > div {
+  min-width: 0;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -126,17 +146,88 @@ button:first-child {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.info-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.manual-grid {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
+  align-items: start;
+}
+
 .status {
   color: #0b6b2f;
   font-weight: 700;
+}
+
+.feature-card h3,
+.manual-card h3,
+.stage h3 {
+  margin-bottom: 8px;
+}
+
+.feature-card p,
+.manual-card p,
+.manual-card li {
+  color: #44506a;
+  line-height: 1.5;
+}
+
+.feature-card {
+  min-height: 180px;
+}
+
+.feature-accent {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  font-weight: 700;
+  color: #1f5eff;
+  background: #e7efff;
+}
+
+.manual-card ol,
+.manual-card ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.manual-card li + li {
+  margin-top: 8px;
+}
+
+.manual-callout {
+  background: #172033;
+  color: #f7f9ff;
+}
+
+.manual-callout p,
+.manual-callout li,
+.manual-callout .muted {
+  color: #d5def2;
 }
 
 @media (max-width: 980px) {
   .hero,
   .workspace,
   .form-grid,
-  .stage-grid {
+  .stage-grid,
+  .info-grid,
+  .manual-grid {
     grid-template-columns: 1fr;
   }
-}
 
+  .section-head {
+    align-items: flex-start;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}

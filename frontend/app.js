@@ -46,7 +46,55 @@ const loadSampleBtn = document.getElementById("loadSampleBtn");
 const resultState = document.getElementById("resultState");
 const pipelineStages = document.getElementById("pipelineStages");
 const heroStats = document.getElementById("heroStats");
+const featureGrid = document.getElementById("featureGrid");
+const manualGrid = document.getElementById("manualGrid");
 let resolvedApiBaseUrl = null;
+
+const featureCards = [
+  {
+    label: "01",
+    title: "CLV Estimation",
+    description:
+      "Predict expected customer value from a single operational form built for retention and revenue decisions.",
+  },
+  {
+    label: "02",
+    title: "Churn Awareness",
+    description:
+      "Surface churn probability beside CLV so business teams can compare value opportunity with retention risk.",
+  },
+  {
+    label: "03",
+    title: "Drift Monitoring",
+    description:
+      "Highlight input features that look different from training-time behavior for better trust in predictions.",
+  },
+  {
+    label: "04",
+    title: "Pipeline Oversight",
+    description:
+      "Expose model quality, processed row counts, and stage-level status in one place for review and demos.",
+  },
+];
+
+const manualSections = [
+  {
+    title: "Getting Started",
+    items: [
+      "Start the backend API before opening the console.",
+      "Load a sample profile for a quick walkthrough, or enter a customer record manually.",
+      "Click Estimate CLV to generate value, churn, and drift outputs.",
+    ],
+  },
+  {
+    title: "How To Read Results",
+    items: [
+      "Predicted CLV represents expected long-term customer value.",
+      "Higher churn probability means the customer may need retention attention.",
+      "Drifted features indicate the current input differs from model training patterns.",
+    ],
+  },
+];
 
 function titleize(value) {
   return value.replaceAll("_", " ");
@@ -120,6 +168,48 @@ function renderResult(data) {
       <span>Drifted Features</span>
       <strong>${data.drift_detected_features.length ? data.drift_detected_features.join(", ") : "None detected"}</strong>
     </div>
+  `;
+}
+
+function renderFeatureCards() {
+  featureGrid.innerHTML = featureCards
+    .map(
+      (feature) => `
+        <article class="feature-card">
+          <div class="feature-accent">${feature.label}</div>
+          <h3>${feature.title}</h3>
+          <p>${feature.description}</p>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function renderManual() {
+  manualGrid.innerHTML = `
+    <article class="manual-card">
+      <h3>Usage Steps</h3>
+      <ol>
+        <li>Open the console after the backend service is running.</li>
+        <li>Use <strong>Load sample</strong> for a valid example record or complete the form manually.</li>
+        <li>Run <strong>Estimate CLV</strong> to view the prediction summary.</li>
+        <li>Review the pipeline visibility section for operational context.</li>
+      </ol>
+    </article>
+    <article class="manual-card manual-callout">
+      ${manualSections
+        .map(
+          (section) => `
+            <div>
+              <h3>${section.title}</h3>
+              <ul>
+                ${section.items.map((item) => `<li>${item}</li>`).join("")}
+              </ul>
+            </div>
+          `
+        )
+        .join("")}
+    </article>
   `;
 }
 
@@ -222,6 +312,8 @@ async function loadPipelineSummary() {
 }
 
 renderForm();
+renderFeatureCards();
+renderManual();
 submitBtn.addEventListener("click", handlePredict);
 loadSampleBtn.addEventListener("click", loadSample);
 loadPipelineSummary();
