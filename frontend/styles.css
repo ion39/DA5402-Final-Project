@@ -1,0 +1,142 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6fb;
+  color: #172033;
+}
+
+.page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.hero,
+.band {
+  background: #ffffff;
+  border: 1px solid #dbe2f0;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.hero {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+  align-items: start;
+}
+
+.eyebrow,
+.muted,
+.subtle {
+  color: #5c6782;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+.hero-stats,
+.stage-grid,
+.result-panel,
+.result-empty {
+  display: grid;
+  gap: 12px;
+}
+
+.metric-card,
+.stage {
+  border: 1px solid #dbe2f0;
+  border-radius: 8px;
+  padding: 14px;
+  background: #f8faff;
+}
+
+.metric-card span,
+.field span {
+  display: block;
+  margin-bottom: 8px;
+  color: #5c6782;
+  font-size: 14px;
+}
+
+.metric-card strong {
+  font-size: 22px;
+}
+
+.metric-card.full {
+  grid-column: 1 / -1;
+}
+
+.section-head,
+.stage-top,
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  gap: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+input,
+select,
+button {
+  border: 1px solid #cfd8ea;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+button {
+  background: #1f5eff;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+button:first-child {
+  background: #ffffff;
+  color: #1f5eff;
+}
+
+.stage-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.status {
+  color: #0b6b2f;
+  font-weight: 700;
+}
+
+@media (max-width: 980px) {
+  .hero,
+  .workspace,
+  .form-grid,
+  .stage-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

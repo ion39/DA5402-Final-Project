@@ -1,0 +1,37 @@
+stages:
+  prepare_data:
+    cmd: python scripts/prepare_data.py
+    deps:
+      - digital_wallet_ltv_dataset.csv
+      - scripts/prepare_data.py
+      - src/clv_app/data.py
+    outs:
+      - data/raw/digital_wallet_ltv_dataset.csv
+      - artifacts/sample_payload.json
+
+  train_model:
+    cmd: python scripts/train.py
+    deps:
+      - data/raw/digital_wallet_ltv_dataset.csv
+      - scripts/train.py
+      - src/clv_app/features.py
+      - src/clv_app/modeling.py
+      - src/clv_app/pipeline.py
+      - configs/base.yaml
+    outs:
+      - artifacts/model_bundle.joblib
+      - artifacts/metrics.json
+      - artifacts/baseline_stats.json
+      - artifacts/feature_importance.csv
+      - artifacts/training_manifest.json
+
+  build_report:
+    cmd: python scripts/generate_pipeline_report.py
+    deps:
+      - scripts/generate_pipeline_report.py
+      - data/raw/digital_wallet_ltv_dataset.csv
+      - artifacts/metrics.json
+      - artifacts/baseline_stats.json
+    outs:
+      - artifacts/pipeline_report.json
+

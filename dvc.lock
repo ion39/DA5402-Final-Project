@@ -1,0 +1,98 @@
+schema: '2.0'
+stages:
+  prepare_data:
+    cmd: python scripts/prepare_data.py
+    deps:
+    - path: digital_wallet_ltv_dataset.csv
+      hash: md5
+      md5: 591dc88e9a0c39482872525fcac3a985
+      size: 1363894
+    - path: scripts/prepare_data.py
+      hash: md5
+      md5: d643711ab007398c7fc5acd2e7faa5dd
+      size: 1081
+    - path: src/clv_app/data.py
+      hash: md5
+      md5: 1fdb03a5744c45903d1ffb032f28318d
+      size: 252
+    outs:
+    - path: artifacts/sample_payload.json
+      hash: md5
+      md5: 9b2e624962444f67f53ff1e61e65626d
+      size: 666
+    - path: data/raw/digital_wallet_ltv_dataset.csv
+      hash: md5
+      md5: fb3e8e048abdd06dc2cb6a1a213a8ca2
+      size: 1366031
+  train_model:
+    cmd: python scripts/train.py
+    deps:
+    - path: configs/base.yaml
+      hash: md5
+      md5: fb92301e1461a30b49deb9a21837788c
+      size: 853
+    - path: data/raw/digital_wallet_ltv_dataset.csv
+      hash: md5
+      md5: fb3e8e048abdd06dc2cb6a1a213a8ca2
+      size: 1366031
+    - path: scripts/train.py
+      hash: md5
+      md5: 5cd9013191fc50efd1705367e52eb754
+      size: 555
+    - path: src/clv_app/features.py
+      hash: md5
+      md5: 0230dc8b4e93ed0ed640401e36967863
+      size: 3875
+    - path: src/clv_app/modeling.py
+      hash: md5
+      md5: 21a2aca79d5178ae7bbde430d4dc7b5a
+      size: 2724
+    - path: src/clv_app/pipeline.py
+      hash: md5
+      md5: 3cdb7c04718ed2a3d6d3cd378bcce656
+      size: 8028
+    outs:
+    - path: artifacts/baseline_stats.json
+      hash: md5
+      md5: 65790310e89976a54a670a707337ab78
+      size: 3596
+    - path: artifacts/feature_importance.csv
+      hash: md5
+      md5: 51e989bfc8ced27e1e2b00e1fe59a360
+      size: 226075
+    - path: artifacts/metrics.json
+      hash: md5
+      md5: 8da6ae4a48f58b0e2f6d2ef7115309f8
+      size: 489
+    - path: artifacts/model_bundle.joblib
+      hash: md5
+      md5: 2d7cb5ad8d73d604cdc6afab025d58d9
+      size: 35100868
+    - path: artifacts/training_manifest.json
+      hash: md5
+      md5: f13b6ce4be7e40bb5452d837e8290266
+      size: 522
+  build_report:
+    cmd: python scripts/generate_pipeline_report.py
+    deps:
+    - path: artifacts/baseline_stats.json
+      hash: md5
+      md5: 65790310e89976a54a670a707337ab78
+      size: 3596
+    - path: artifacts/metrics.json
+      hash: md5
+      md5: 8da6ae4a48f58b0e2f6d2ef7115309f8
+      size: 489
+    - path: data/raw/digital_wallet_ltv_dataset.csv
+      hash: md5
+      md5: fb3e8e048abdd06dc2cb6a1a213a8ca2
+      size: 1366031
+    - path: scripts/generate_pipeline_report.py
+      hash: md5
+      md5: f5759f9e007c41fc70995ad76dd60cbf
+      size: 2206
+    outs:
+    - path: artifacts/pipeline_report.json
+      hash: md5
+      md5: b282cc21e3c29ef7531cc9e164fbe6b6
+      size: 1827

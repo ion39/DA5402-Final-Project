@@ -1,0 +1,15 @@
+.git
+.dvc
+.tmp
+.tmp_pytest_cache
+.pytest_cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+mlruns
+artifacts
+data/raw
+data/processed
+pytest-cache-files-*
+*.log

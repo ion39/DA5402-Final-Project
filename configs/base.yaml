@@ -1,0 +1,88 @@
+project:
+  name: clv-mlops-app
+  random_state: 42
+  test_size: 0.2
+
+paths:
+  raw_source: digital_wallet_ltv_dataset.csv
+  raw_data: data/raw/digital_wallet_ltv_dataset.csv
+  sample_payload: artifacts/sample_payload.json
+  model_bundle: artifacts/model_bundle.joblib
+  metrics: artifacts/metrics.json
+  baseline_stats: artifacts/baseline_stats.json
+  feature_importance: artifacts/feature_importance.csv
+  pipeline_report: artifacts/pipeline_report.json
+  training_manifest: artifacts/training_manifest.json
+
+modeling:
+  classifier: random_forest
+  regressor: random_forest
+  classifier_params:
+    n_estimators: 250
+    max_depth: 8
+    min_samples_leaf: 4
+  regressor_params:
+    n_estimators: 300
+    max_depth: 10
+    min_samples_leaf: 2
+  classifier_candidates:
+    - name: random_forest
+      params:
+        n_estimators: 120
+        max_depth: 8
+        min_samples_leaf: 4
+        n_jobs: 1
+    - name: extra_trees
+      params:
+        n_estimators: 160
+        max_depth: 10
+        min_samples_leaf: 2
+        n_jobs: 1
+    - name: gradient_boosting
+      params:
+        n_estimators: 80
+        learning_rate: 0.05
+        max_depth: 3
+    - name: xgboost
+      params:
+        n_estimators: 120
+        max_depth: 4
+        learning_rate: 0.05
+        subsample: 0.9
+        colsample_bytree: 0.9
+        eval_metric: logloss
+        n_jobs: 1
+        verbosity: 0
+  regressor_candidates:
+    - name: random_forest
+      params:
+        n_estimators: 160
+        max_depth: 10
+        min_samples_leaf: 2
+        n_jobs: 1
+    - name: extra_trees
+      params:
+        n_estimators: 180
+        max_depth: 12
+        min_samples_leaf: 2
+        n_jobs: 1
+    - name: gradient_boosting
+      params:
+        n_estimators: 100
+        learning_rate: 0.05
+        max_depth: 3
+    - name: xgboost
+      params:
+        n_estimators: 140
+        max_depth: 4
+        learning_rate: 0.05
+        subsample: 0.9
+        colsample_bytree: 0.9
+        objective: reg:squarederror
+        n_jobs: 1
+        verbosity: 0
+
+monitoring:
+  drift_threshold_mean_shift: 0.35
+  drift_threshold_std_shift: 0.35
+  drift_threshold_zscore: 3.0

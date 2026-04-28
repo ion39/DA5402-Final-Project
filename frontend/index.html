@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CLV Intelligence Console</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Financial services retention intelligence</p>
+          <h1>CLV Intelligence Console</h1>
+          <p class="subtle">
+            Estimate customer lifetime value, inspect churn risk, and review pipeline health from one operational workspace.
+          </p>
+        </div>
+        <div class="hero-stats" id="heroStats"></div>
+      </section>
+
+      <section class="band">
+        <div class="section-head">
+          <h2>Customer Prediction</h2>
+          <div class="actions">
+            <button id="loadSampleBtn" type="button">Load sample</button>
+            <button id="submitBtn" type="button">Estimate CLV</button>
+          </div>
+        </div>
+        <div class="workspace">
+          <form id="predictionForm" class="form-grid"></form>
+          <aside class="result-panel">
+            <h3>Prediction output</h3>
+            <div id="resultState" class="result-empty">No prediction yet.</div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="section-head">
+          <h2>Pipeline Visibility</h2>
+          <span class="muted">Prepared for demo and operations review</span>
+        </div>
+        <div id="pipelineStages" class="stage-grid"></div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
+
